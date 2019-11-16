@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState}               from 'react';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
-import Admin from "./pages/Admin";
-import Home from "./pages/Home";
-import PrivateRoute from "./components/routes/PrivateRoute";
-import {AuthContext} from "./context/auth";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import NoTokenRoute from "./components/routes/NoTokenRoute";
-import PublicRoute from "./components/routes/PublicRoute";
-import Public from "./pages/Public";
+import Admin                           from "./pages/Admin";
+import Home                            from "./pages/Home";
+import PrivateRoute                    from "./components/routes/PrivateRoute";
+import {AuthContext}                   from "./context/auth";
+import Login                           from "./pages/Login";
+import Signup                          from "./pages/Signup";
+import NoTokenRoute                    from "./components/routes/NoTokenRoute";
+import PublicRoute                     from "./components/routes/PublicRoute";
+import Public                          from "./pages/Public";
 
 
 const App = () => {
@@ -29,29 +29,29 @@ const App = () => {
         <AuthContext.Provider value={authContextValue}>
             <Router>
                 <div>
-                    <ul>
-                        <li>
-                            <Link to="/">Home Page</Link>
-                        </li>
-                        <li>
-                            <Link to="/admin">Admin Page</Link>
-                        </li>
-                        <li>
-                            <Link to="/login">Login Page</Link>
-                        </li>
-                        <li>
-                            <Link to="/signup">Signup Page</Link>
-                        </li>
-                        <li>
-                            <Link to="/public">Public Page</Link>
-                        </li>
-                    </ul>
+                    {/*<ul>*/}
+                    {/*    <li>*/}
+                    {/*        <Link to="/">Home Page</Link>*/}
+                    {/*    </li>*/}
+                    {/*    <li>*/}
+                    {/*        <Link to="/admin">Admin Page</Link>*/}
+                    {/*    </li>*/}
+                    {/*    <li>*/}
+                    {/*        <Link to="/login">Login Page</Link>*/}
+                    {/*    </li>*/}
+                    {/*    <li>*/}
+                    {/*        <Link to="/signup">Signup Page</Link>*/}
+                    {/*    </li>*/}
+                    {/*    <li>*/}
+                    {/*        <Link to="/public">Public Page</Link>*/}
+                    {/*    </li>*/}
+                    {/*</ul>*/}
 
-                    <PrivateRoute exact={true} path="/" component={Home}/>
+                    <PublicRoute exact={true} path="/" component={Public}/>
+                    <PrivateRoute path="/dashboard" component={Home}/>
                     <NoTokenRoute path="/login" component={Login}/>
                     <NoTokenRoute path="/signup" component={Signup}/>
                     <PrivateRoute path="/admin" component={Admin}/>
-                    <PublicRoute path="/public" component={Public}/>
 
                 </div>
             </Router>

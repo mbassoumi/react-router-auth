@@ -1,11 +1,19 @@
-import React, {useState} from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import axios from 'axios';
-import {useAuth} from "../context/auth";
-import logoImg from "../img/logo.png";
+import React, {useState}                        from 'react';
+import {Link, Redirect}                         from 'react-router-dom';
+import axios                                    from 'axios';
+import {useAuth}                                from "../context/auth";
+import logoImg                                  from "../img/logo.png";
 import {Card, Logo, Form, Input, Button, Error} from '../components/AuthForm';
+import LoginForm                                from "../components/forms/LoginForm";
 
 const Login = (props) => {
+
+    const onSubmit = (values, {setSubmitting}) => {
+        setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+        }, 400);
+    };
 
     const referer = (props.location.state && props.location.state.referer) || '/';
 
@@ -49,26 +57,12 @@ const Login = (props) => {
 
 
     return (
-        <Card>
-            <Logo src={logoImg}/>
-            <Form>
-                <Input
-                    type="username"
-                    value={userName}
-                    onChange={event => setUserName(event.target.value)}
-                    placeholder="username"
-                />
-                <Input
-                    type="password"
-                    value={password}
-                    onChange={event => setPassword(event.target.value)}
-                    placeholder="password"
-                />
-                <Button onClick={postLogin}>Sign In</Button>
-            </Form>
-            <Link to="/signup">Don't have an account?</Link>
-            {isError && <Error>The username or password provided were incorrect!</Error>}
-        </Card>
+        <div className="py-12 px-4 sm:w-full md:w-1/2 xl:w-1/3 mx-auto ">
+            <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
+            <div className='shadow-xl'>
+                <LoginForm onSubmit={onSubmit} initialValues={{}}/>
+            </div>
+        </div>
     );
 }
 
