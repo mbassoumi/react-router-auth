@@ -1,8 +1,7 @@
-import React        from "react";
-import {Link}       from 'react-router-dom';
-import logoImg      from "../img/logo.png";
-import {Card, Logo} from '../components/AuthForm';
-import SignupForm   from "../components/Signup/SignupForm";
+import React      from "react";
+import {Link}     from 'react-router-dom';
+import logoImg    from "../img/logo.png";
+import SignupForm from "../components/Signup/SignupForm";
 
 
 const Signup = () => {
@@ -13,11 +12,12 @@ const Signup = () => {
         }, 400);
     };
     return (
-        <Card>
-            <Logo src={logoImg}/>
-            <SignupForm onSubmit={onSubmit} initialValues={{}}/>
-            <Link to="/login">Already have an account?</Link>
-        </Card>
+        <div className="px-4 sm:w-full md:w-1/2 xl:w-1/3 mx-auto ">
+            <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
+            <div className='shadow-xl'>
+                <SignupForm onSubmit={onSubmit} initialValues={{}}/>
+            </div>
+        </div>
     );
 };
 
