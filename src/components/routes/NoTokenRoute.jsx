@@ -1,6 +1,6 @@
-import React from 'react';
+import React             from 'react';
 import {Route, Redirect} from 'react-router-dom';
-import {useAuth} from "../../context/auth";
+import {useAuth}         from "../../context/auth";
 
 
 const NoTokenRoute = ({component: Component, ...rest}) => {
@@ -10,7 +10,7 @@ const NoTokenRoute = ({component: Component, ...rest}) => {
         <Route {...rest}
                render={(props) => (
                    authTokens ? (
-                       <Redirect to="/"/>
+                       <Redirect to="/dashboard"/>
                    ) : (
                        <Component {...props}/>
                    )
