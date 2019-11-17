@@ -1,12 +1,14 @@
 import React                     from 'react';
 import * as Yup                  from 'yup';
 import {Formik, Form}            from 'formik';
-import {TextField, StyledButton} from "./FormikComponents";
-import {Link}                    from "react-router-dom";
+import {TextField, StyledButton} from './FormikComponents';
+import {Link}                    from 'react-router-dom';
+import PropTypes                 from 'prop-types';
 
 
 const validate = Yup.object({
     username: Yup.string()
+                 .email('Invalid email address')
                  .required('Required'),
     password: Yup.string()
                  .required('Required'),
@@ -39,6 +41,7 @@ const LoginForm = ({initialValues, onSubmit}) => {
                     id='password'
                     name='password'
                     type='password'
+                    autoComplete="on"
                     placeholder='Your Password'
                 />
                 <div className='px-4 py-2 pb-4'>
@@ -52,11 +55,16 @@ const LoginForm = ({initialValues, onSubmit}) => {
                 </div>
 
                 <div className='flex justify-end text-blue-400'>
+                    {/* eslint-disable-next-line react/no-unescaped-entities */}
                     <Link to="/signup">Don't have an account?</Link>
                 </div>
             </Form>
         </Formik>
-    )
+    );
 };
 
+LoginForm.propTypes = {
+    initialValues: PropTypes.object,
+    onSubmit     : PropTypes.func
+};
 export default LoginForm;

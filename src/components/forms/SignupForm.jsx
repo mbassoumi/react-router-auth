@@ -1,8 +1,10 @@
 import React                                    from 'react';
 import * as Yup                                 from 'yup';
 import {Formik, Form}                           from 'formik';
-import {Link}                                   from "react-router-dom";
-import {CheckboxField, TextField, StyledButton} from "./FormikComponents";
+import {Link}                                   from 'react-router-dom';
+import {CheckboxField, TextField, StyledButton} from './FormikComponents';
+import PropTypes                                from 'prop-types';
+
 
 const validate = Yup.object({
     firstName      : Yup.string()
@@ -36,13 +38,6 @@ const signupInitialValues = {
 };
 
 const SignupForm = ({initialValues, onSubmit}) => {
-
-    const renderButton = (type, label) => (
-        <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline"
-            type={type}>{label}
-        </button>
-    );
 
     const combinedInitialValues = Object.assign(signupInitialValues, initialValues);
     return (
@@ -84,6 +79,7 @@ const SignupForm = ({initialValues, onSubmit}) => {
                     id='password'
                     name='password'
                     type='password'
+                    autoComplete="on"
                     placeholder='Your Password'
                 />
                 <TextField
@@ -91,6 +87,7 @@ const SignupForm = ({initialValues, onSubmit}) => {
                     id='confirmPassword'
                     name='confirmPassword'
                     type='password'
+                    autoComplete="on"
                     placeholder='Confirm Password'
                 />
 
@@ -115,8 +112,12 @@ const SignupForm = ({initialValues, onSubmit}) => {
                 </div>
             </Form>
         </Formik>
-    )
+    );
 };
 
+SignupForm.propTypes = {
+    initialValues: PropTypes.object,
+    onSubmit     : PropTypes.func
+};
 
 export default SignupForm;

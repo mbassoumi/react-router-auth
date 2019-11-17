@@ -1,6 +1,8 @@
-import {ErrorMessage, Field, useField} from "formik";
-import classNames                      from "classnames";
-import React                           from "react";
+import {ErrorMessage, Field, useField} from 'formik';
+import classNames                      from 'classnames';
+import React                           from 'react';
+import PropTypes                       from 'prop-types';
+
 
 const TextField = ({label, ...props}) => {
 
@@ -8,9 +10,9 @@ const TextField = ({label, ...props}) => {
     const [, meta] = useField(props);
     const errors = meta.touched && meta.error;
     const classes = classNames(
-        "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-        {"border-red-500": errors},
-        {"border-blue-300": !errors}
+        'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+        {'border-red-500': errors},
+        {'border-blue-300': !errors}
     );
     return (
         <div className='field-container px-4 pb-4'>
@@ -26,6 +28,13 @@ const TextField = ({label, ...props}) => {
     );
 };
 
+TextField.propTypes = {
+    label: PropTypes.string,
+    id   : PropTypes.string,
+    name : PropTypes.string,
+};
+
+
 const CheckboxField = ({children, ...props}) => {
     // We need to tell useField what type of input this is
     // since React treats radios and checkboxes differently
@@ -33,9 +42,9 @@ const CheckboxField = ({children, ...props}) => {
     const [field, meta] = useField({...props, type: 'checkbox'});
     const errors = meta.touched && meta.error;
     const classes = classNames(
-        "shadow   rounded mr-3  py-2 px-3 focus:outline-none focus:shadow-outline",
-        {"border-red-500": errors},
-        {"border-blue-300": !errors}
+        'shadow   rounded mr-3  py-2 px-3 focus:outline-none focus:shadow-outline',
+        {'border-red-500': errors},
+        {'border-blue-300': !errors}
     );
 
     return (
@@ -51,6 +60,12 @@ const CheckboxField = ({children, ...props}) => {
     );
 };
 
+CheckboxField.propTypes = {
+    children: PropTypes.any,
+    id      : PropTypes.string,
+    name    : PropTypes.string,
+};
+
 
 const StyledButton = (props) =>
     (
@@ -62,4 +77,7 @@ const StyledButton = (props) =>
         </button>
     );
 
+StyledButton.propTypes = {
+    children: PropTypes.any,
+};
 export {TextField, CheckboxField, StyledButton};

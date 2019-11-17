@@ -1,7 +1,6 @@
-import React      from "react";
-import {Link}     from 'react-router-dom';
-import logoImg    from "../img/logo.png";
-import SignupForm from "../components/forms/SignupForm";
+import React      from 'react';
+import logoImg    from '../img/logo.png';
+import SignupForm from '../components/forms/SignupForm';
 
 
 const Signup = () => {

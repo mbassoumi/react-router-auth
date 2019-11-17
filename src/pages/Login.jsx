@@ -1,20 +1,14 @@
-import React, {useState}                        from 'react';
-import {Redirect}                         from 'react-router-dom';
-import axios                                    from 'axios';
-import {useAuth}                                from "../context/auth";
-import logoImg                                  from "../img/logo.png";
-import LoginForm                                from "../components/forms/LoginForm";
+import React, {useState} from 'react';
+import {Redirect}        from 'react-router-dom';
+import {useAuth}         from '../context/auth';
+import logoImg           from '../img/logo.png';
+import LoginForm         from '../components/forms/LoginForm';
+import PropTypes         from 'prop-types';
 
-const Login = (props) => {
 
-    const onSubmit = (values, {setSubmitting}) => {
-        setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-        }, 400);
-    };
+const Login = ({location}) => {
 
-    const referer = (props.location.state && props.location.state.referer) || '/';
+    const referer = (location.state && location.state.referer) || '/';
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const {setAuthTokens} = useAuth();
@@ -25,7 +19,7 @@ const Login = (props) => {
             setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
-                setAuthTokens("dummy token");
+                setAuthTokens('dummy token');
                 setIsLoggedIn(true);
             }, 400);
         } else {
@@ -63,6 +57,14 @@ const Login = (props) => {
             </div>
         </div>
     );
-}
+};
+
+Login.propTypes = {
+    location: PropTypes.shape({
+        state: PropTypes.shape({
+            referer: PropTypes.object
+        })
+    }),
+};
 
 export default Login;
