@@ -4,6 +4,7 @@ import {useAuth}         from '../context/auth';
 import logoImg           from '../img/logo.png';
 import LoginForm         from '../components/forms/LoginForm';
 import PropTypes         from 'prop-types';
+// import {httpRequester}   from "../http-requester";
 
 
 const Login = ({location}) => {
@@ -25,6 +26,11 @@ const Login = ({location}) => {
         } else {
             alert('error');
         }
+
+        // httpRequester.post('login', values)
+        //              .then(result => {
+        //                  console.log(result);
+        //              });
 
         // axios.post("http://127.0.0.1:8080/token", {
         //     userName,
