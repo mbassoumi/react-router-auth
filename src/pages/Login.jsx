@@ -30,20 +30,23 @@ const Login = ({location}) => {
         setAuthTokens(response.accessToken);
     };
     const responseGoogle = (response) => {
+        console.log(response);
         const profileObject = response.profileObj;
-        const user = {
-            loggedFrom : 'google',
-            id         : profileObject.googleId,
-            displayName: profileObject.name,
-            email      : profileObject.email,
-            birthday   : profileObject.name,
-            address    : profileObject.name,
-            picture    : profileObject.imageUrl,
-            firstName  : profileObject.givenName,
-            lastName   : profileObject.familyName,
-        };
-        setAuthUser(user);
-        setAuthTokens(response.accessToken);
+        if (profileObject !== undefined) {
+            const user = {
+                loggedFrom : 'google',
+                id         : profileObject.googleId,
+                displayName: profileObject.name,
+                email      : profileObject.email,
+                birthday   : profileObject.name,
+                address    : profileObject.name,
+                picture    : profileObject.imageUrl,
+                firstName  : profileObject.givenName,
+                lastName   : profileObject.familyName,
+            };
+            setAuthUser(user);
+            setAuthTokens(response.accessToken);
+        }
     };
 
     const referer = (location.state && location.state.referer) || '/';
