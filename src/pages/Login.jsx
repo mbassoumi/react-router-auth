@@ -4,25 +4,56 @@ import {useAuth}         from '../context/auth';
 import logoImg           from '../img/logo.png';
 import LoginForm         from '../components/forms/LoginForm';
 import PropTypes         from 'prop-types';
-import FacebookLogin     from 'react-facebook-login';
-import GoogleLogin       from 'react-google-login';
+
 
 // import {httpRequester}   from "../http-requester";
 
 
 const Login = ({location}) => {
 
+    const {setAuthTokens, setAuthUser} = useAuth();
+
+
     const responseFacebook = (response) => {
-        console.log(response);
-    }
+        const user = {
+            loggedFrom : 'facebook',
+            id         : response.id,
+            displayName: response.name,
+            email      : response.email,
+            birthday   : response.name,
+            address    : response.name,
+            picture    : response.picture.data.url,
+            firstName  : response.first_name,
+            lastName   : response.last_name,
+        };
+        setAuthUser(user);
+        setAuthTokens(response.accessToken);
+    };
     const responseGoogle = (response) => {
-        console.log(response);
-    }
+        const profileObject = response.profileObj;
+        const user = {
+            loggedFrom : 'google',
+            id         : profileObject.googleId,
+            displayName: profileObject.name,
+            email      : profileObject.email,
+            birthday   : profileObject.name,
+            address    : profileObject.name,
+            picture    : profileObject.imageUrl,
+            firstName  : profileObject.givenName,
+            lastName   : profileObject.familyName,
+        };
+        setAuthUser(user);
+        setAuthTokens(response.accessToken);
+    };
 
     const referer = (location.state && location.state.referer) || '/';
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const {setAuthTokens} = useAuth();
+
+    const setAuthContext = (token, user) => {
+        setAuthUser(user);
+        setAuthTokens(token);
+    };
 
 
     const postLogin = (values, {setSubmitting}) => {
@@ -30,7 +61,15 @@ const Login = ({location}) => {
             setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
-                setAuthTokens('dummy token');
+                const user = {
+                    displayName: values.username + ' Name',
+                    firstName  : values.username + ' first name',
+                    lastName   : values.username + ' last name',
+                    email      : values.username,
+                    birthday   : values.username + ' birthday',
+                    address    : values.username + ' address'
+                };
+                setAuthContext('dummy token', user);
                 setIsLoggedIn(true);
             }, 400);
         } else {
@@ -69,19 +108,13 @@ const Login = ({location}) => {
         <div className="py-12 px-4 sm:w-full md:w-1/2 xl:w-1/3 mx-auto ">
             <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
             <div className='shadow-xl'>
-                <LoginForm onSubmit={postLogin} initialValues={{}}/>
+                <LoginForm
+                    onSubmit={postLogin}
+                    initialValues={{}}
+                    facebookLogin={responseFacebook}
+                    googleLogin={responseGoogle}
+                />
             </div>
-            <FacebookLogin
-                appId="2512425312375054" //APP ID NOT CREATED YET
-                fields="name,email,picture"
-                callback={responseFacebook}
-            />
-            <GoogleLogin
-                clientId="248514193406-17vsigi4aqlru98n8v4so6liao8kc5bi.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
-                buttonText="LOGIN WITH GOOGLE"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-            />
         </div>
     );
 };

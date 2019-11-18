@@ -13,7 +13,9 @@ import Dashboard                    from './pages/Dashboard';
 const App = () => {
 
     const [authTokens, setAuthTokens] = useState();
-    const [isLoading, setIsLoading] = useState(true);
+    const [authUser, setAuthUser] = useState();
+    const [isTokenLoading, setIsTokenLoading] = useState(true);
+    const [isUserLoading, setIsUserLoading] = useState(true);
 
     useEffect(() => {
 
@@ -21,46 +23,56 @@ const App = () => {
             return localStorage.getItem('tokens');
         }
 
+        async function fetchUserInfo() {
+            return localStorage.getItem('user');
+        }
+
         fetchTokens().then((tokens) => {
             if (tokens) {
                 setAuthTokens(tokens);
             }
-            setIsLoading(false);
+            setIsTokenLoading(false);
 
+        });
+
+        fetchUserInfo().then((user) => {
+            if (user) {
+                setAuthUser(JSON.parse(user));
+            }
+            setIsUserLoading(false);
         });
     }, []);
 
-    const setTokens        = (data) => {
 
-              if (data === undefined) {
+    const setTokens = (data) => {
 
-                  localStorage.removeItem('tokens');
+        if (data === undefined) {
+            localStorage.removeItem('tokens');
+        } else {
+            localStorage.setItem('tokens', JSON.stringify(data));
+        }
+        setAuthTokens(data);
 
-              } else {
+    };
 
-                  localStorage.setItem('tokens', JSON.stringify(data));
+    const setAuthUserInfo = (user) => {
+        if (user === undefined) {
+            localStorage.removeItem('user');
+        } else {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+        setAuthUser(user);
+    };
 
-              }
-              setAuthTokens(data);
-
-          },
-
-
-          authContextValue = {
-              authTokens,
-              'setAuthTokens': setTokens,
-              'user'         : {
-                  'displayName': 'Majd Bassoumi',
-                  'firstName'  : 'Majd',
-                  'lastName'   : 'Bassoumi',
-                  'email'      : 'mbbassoumi@gmail.com',
-                  'birthday'   : '29-6-1995',
-                  'address'    : 'Ramallah / Al-Bira'
-              }
-          };
+    const authContextValue = {
+        authTokens,
+        setAuthTokens: setTokens,
+        authUser,
+        setAuthUser  : setAuthUserInfo
+    };
 
     return (
-        !isLoading &&
+        !isTokenLoading && !isUserLoading &&
         (<AuthContext.Provider value={authContextValue}>
 
             <Router>
