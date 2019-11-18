@@ -4,10 +4,20 @@ import {useAuth}         from '../context/auth';
 import logoImg           from '../img/logo.png';
 import LoginForm         from '../components/forms/LoginForm';
 import PropTypes         from 'prop-types';
+import FacebookLogin     from 'react-facebook-login';
+import GoogleLogin       from 'react-google-login';
+
 // import {httpRequester}   from "../http-requester";
 
 
 const Login = ({location}) => {
+
+    const responseFacebook = (response) => {
+        console.log(response);
+    }
+    const responseGoogle = (response) => {
+        console.log(response);
+    }
 
     const referer = (location.state && location.state.referer) || '/';
 
@@ -61,6 +71,17 @@ const Login = ({location}) => {
             <div className='shadow-xl'>
                 <LoginForm onSubmit={postLogin} initialValues={{}}/>
             </div>
+            <FacebookLogin
+                appId="2512425312375054" //APP ID NOT CREATED YET
+                fields="name,email,picture"
+                callback={responseFacebook}
+            />
+            <GoogleLogin
+                clientId="248514193406-17vsigi4aqlru98n8v4so6liao8kc5bi.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+                buttonText="LOGIN WITH GOOGLE"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+            />
         </div>
     );
 };
