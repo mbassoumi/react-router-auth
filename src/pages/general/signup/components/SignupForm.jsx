@@ -2,7 +2,7 @@ import React                                    from 'react';
 import * as Yup                                 from 'yup';
 import {Formik, Form}                           from 'formik';
 import {Link}                                   from 'react-router-dom';
-import {CheckboxField, TextField, StyledButton} from './FormikComponents';
+import {CheckboxField, TextField, StyledButton} from '../../../../components/forms/FormikComponents';
 import PropTypes                                from 'prop-types';
 
 
