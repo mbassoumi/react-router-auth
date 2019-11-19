@@ -1,16 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {BrowserRouter as Router}    from 'react-router-dom';
-import PrivateRoute                 from './components/routes/PrivateRoute';
 import {AuthContext}                from './context/auth';
-import Login                        from './pages/Login';
-import Signup                       from './pages/Signup';
-import NoTokenRoute                 from './components/routes/NoTokenRoute';
-import PublicRoute                  from './components/routes/PublicRoute';
-import Public                       from './pages/Public';
-import Dashboard                    from './pages/Dashboard';
+import Routes                       from './routes';
 
 
 const App = () => {
+
 
     const [authTokens, setAuthTokens] = useState();
     const [authUser, setAuthUser] = useState();
@@ -74,16 +68,7 @@ const App = () => {
     return (
         !isTokenLoading && !isUserLoading &&
         (<AuthContext.Provider value={authContextValue}>
-
-            <Router>
-                <div>
-                    <PublicRoute exact={true} path="/" component={Public}/>
-                    <PrivateRoute path="/dashboard" component={Dashboard}/>
-                    <NoTokenRoute path="/login" component={Login}/>
-                    <NoTokenRoute path="/signup" component={Signup}/>
-
-                </div>
-            </Router>
+            <Routes/>
         </AuthContext.Provider>)
     );
 

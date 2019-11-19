@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useAuth}                    from '../context/auth';
-import MajdPicture                  from '../img/Majd2.jpg';
+import {useAuth}                    from '../../../context/auth';
+import MajdPicture                  from '../../../img/Majd2.jpg';
 
 const Dashboard = () => {
     const {setAuthTokens, authUser, setAuthUser} = useAuth();
@@ -9,10 +9,10 @@ const Dashboard = () => {
     useEffect(() => {
         if (authUser.loggedFrom === 'facebook') {
             setUserPicture(`//graph.facebook.com/${authUser.id}/picture?type=large`);
-        }else if (authUser.loggedFrom === 'google'){
+        } else if (authUser.loggedFrom === 'google') {
             setUserPicture(authUser.picture);
         }
-    }, []);
+    }, [authUser.id, authUser.loggedFrom, authUser.picture]);
 
     const logOut = () => {
         setAuthTokens();

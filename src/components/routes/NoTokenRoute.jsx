@@ -7,14 +7,6 @@ import PropTypes          from 'prop-types';
 const NoTokenRoute = ({component: Component, ...rest}) => {
     const {authTokens} = useAuth();
 
-    useEffect(() => {
-
-        console.log('mount');
-        return () => {
-            console.log('here!');
-        };
-    }, []);
-
     return (
         <Route {...rest}
                render={(props) => (

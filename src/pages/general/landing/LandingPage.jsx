@@ -1,11 +1,11 @@
 import React        from 'react';
-import AppStoreSvg  from '../img/App Store.svg';
-import PlayStoreSvg from '../img/Play Store.svg';
-import DevicesSvg   from '../img/devices.svg';
+import AppStoreSvg  from '../../../img/App Store.svg';
+import PlayStoreSvg from '../../../img/Play Store.svg';
+import DevicesSvg   from '../../../img/devices.svg';
 import {Link}       from 'react-router-dom';
 
 
-const Public = () => (
+const LandingPage = () => (
     <div>
 
         {/*style="background-image:url('bg.svg');"*/}
@@ -73,4 +73,4 @@ const Public = () => (
     </div>
 );
 
-export default Public;
+export default LandingPage;
