@@ -13,13 +13,13 @@ const App = () => {
 
     useEffect(() => {
 
-        async function fetchTokens() {
+        const fetchTokens = async () => {
             return localStorage.getItem('tokens');
-        }
+        };
 
-        async function fetchUserInfo() {
+        const fetchUserInfo = async () => {
             return localStorage.getItem('user');
-        }
+        };
 
         fetchTokens().then((tokens) => {
             if (tokens) {
