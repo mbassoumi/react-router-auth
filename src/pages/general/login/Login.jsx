@@ -1,11 +1,11 @@
-import React, {useState}                           from 'react';
-import {Redirect}                                  from 'react-router-dom';
-import {useAuth}                                   from '../../../context/auth';
-import logoImg                                     from '../../../img/logo.png';
-import LoginForm                                   from './components/LoginForm';
-import PropTypes                                   from 'prop-types';
-import {loginApi}                                  from './apis/loginApi';
-import {googleLoginApi, googleLoginFailureApi}     from './apis/googleLoginApi';
+import React, {useState}                       from 'react';
+import {Link, Redirect}                        from 'react-router-dom';
+import {useAuth}                               from '../../../context/auth';
+import logoImg                                 from '../../../img/logo.png';
+import LoginForm                               from './components/LoginForm';
+import PropTypes                               from 'prop-types';
+import {loginApi}                              from './apis/loginApi';
+import {googleLoginApi, googleLoginFailureApi} from './apis/googleLoginApi';
 import {facebookLoginApi, facebookLoginFailureApi} from './apis/facebookLoginApi';
 
 
@@ -77,7 +77,9 @@ const Login = ({location}) => {
 
     return (
         <div className="py-12 px-4 sm:w-full md:w-1/2 xl:w-1/3 mx-auto ">
-            <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
+            <Link to="/">
+                <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
+            </Link>
             <div className='shadow-xl'>
                 <LoginForm
                     onSubmit={login}

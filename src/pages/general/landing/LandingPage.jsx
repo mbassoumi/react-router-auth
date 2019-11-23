@@ -24,13 +24,15 @@ const LandingPage = () => (
                         BASSOUMI
                     </a>
 
-                    <div className="flex w-1/2 justify-end content-center text-blue-400">
-                        <Link to="/login"
-                              className="mx-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2  rounded focus:outline-none focus:shadow-outline">Login</Link>
-                        <Link to="/signup"
-                              className="mx-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2  rounded focus:outline-none focus:shadow-outline">Signup</Link>
-                    </div>
 
+
+                </div>
+
+                <div className="flex justify-end content-center text-blue-400 text-sm md:text-lg">
+                    <Link to="/login"
+                          className="mx-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2  rounded focus:outline-none focus:shadow-outline">Login</Link>
+                    <Link to="/signup"
+                          className="mx-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2  rounded focus:outline-none focus:shadow-outline">Signup</Link>
                 </div>
 
             </div>

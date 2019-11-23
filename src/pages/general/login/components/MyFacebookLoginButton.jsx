@@ -15,7 +15,7 @@ const MyFacebookLoginButton = ({callback, onFailure}) => (
         cookie={true}
         xfbml={true}
         render={renderProps => (
-            <FacebookLoginButton onClick={renderProps.onClick}/>
+            <FacebookLoginButton onClick={renderProps.onClick} ><p className="text-sm md:text-lg truncate">Login With Facebook</p></FacebookLoginButton>
         )}
     />
 );

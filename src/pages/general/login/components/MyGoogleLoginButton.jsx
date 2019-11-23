@@ -9,7 +9,7 @@ const MyGoogleLoginButton = ({onSuccess, onFailure}) => (
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID} //CLIENTID NOT CREATED YET
         buttonText=""
         render={renderProps => (
-            <GoogleLoginButton onClick={renderProps.onClick} disabled={renderProps.disabled}/>
+            <GoogleLoginButton onClick={renderProps.onClick} disabled={renderProps.disabled}><p className="text-sm md:text-lg truncate">Login With Google</p></GoogleLoginButton>
         )}
         onSuccess={onSuccess}
         onFailure={onFailure}

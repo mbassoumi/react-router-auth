@@ -3,7 +3,7 @@ import logoImg           from '../../../img/logo.png';
 import SignupForm        from './components/SignupForm';
 import {signupApi}       from './apis/signup';
 import {useAuth}         from '../../../context/auth';
-import {Redirect}        from 'react-router-dom';
+import {Link, Redirect}  from 'react-router-dom';
 
 
 const Signup = () => {
@@ -29,7 +29,9 @@ const Signup = () => {
     }
     return (
         <div className="py-12 px-4 sm:w-full md:w-1/2 xl:w-1/3 mx-auto ">
-            <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
+            <Link to="/">
+                <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
+            </Link>
             <div className='shadow-xl'>
                 <SignupForm onSubmit={siignup} initialValues={{}}/>
             </div>
