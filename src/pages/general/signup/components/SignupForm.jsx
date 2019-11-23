@@ -47,7 +47,7 @@ const SignupForm = ({initialValues, onSubmit}) => {
             onSubmit={onSubmit}
         >
             <Form className=" bg-white shadow-md rounded-lg px-8 py-8 pt-8">
-                <div className="flex">
+                <div className="hidden md:flex ">
                     <div className="w-1/2">
                         <TextField
                             label='First Name'
@@ -67,6 +67,26 @@ const SignupForm = ({initialValues, onSubmit}) => {
                         />
                     </div>
                 </div>
+
+                <div className="md:hidden">
+                    <TextField
+                        label='First Name'
+                        id='firstName'
+                        name='firstName'
+                        type='text'
+                        placeholder='Your first name'
+                    />
+                </div>
+                <div className="md:hidden">
+                    <TextField
+                        label='Last Name'
+                        id='lastName'
+                        name='lastName'
+                        type='text'
+                        placeholder='Your last name'
+                    />
+                </div>
+
                 <TextField
                     label='Email'
                     id='email'
