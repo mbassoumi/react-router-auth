@@ -1,16 +1,15 @@
-import React, {useEffect} from 'react';
-import {Route, Redirect}  from 'react-router-dom';
-import {useAuth}          from '../../context/auth';
-import PropTypes          from 'prop-types';
+import React             from 'react';
+import {Route, Redirect} from 'react-router-dom';
+import PropTypes         from 'prop-types';
+import {useSelector}     from 'react-redux';
 
 
 const NoTokenRoute = ({component: Component, ...rest}) => {
-    const {authTokens} = useAuth();
-
+    const auth = useSelector(state => state.auth);
     return (
         <Route {...rest}
                render={(props) => (
-                   authTokens ? (
+                   (auth && auth.token) ? (
                        <Redirect to="/dashboard"/>
                    ) : (
                        <Component {...props}/>

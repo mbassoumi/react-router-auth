@@ -4,15 +4,22 @@ import App                          from './App';
 import './styles/tailwind.css';
 import * as serviceWorker           from './serviceWorker';
 
+import {Provider}    from 'react-redux';
+import {createStore} from 'redux';
+import {rootReducer} from './rootReducer';
+
+
+const store = createStore(rootReducer);
+
 const Index = () => {
 
     const [isOnline, setOnline] = useState(true);
     useEffect(() => {
-        window.addEventListener('online', () => setOnline(true));
-        window.addEventListener('offline', () => setOnline(false));
+        window.addEventListener('online', setOnline.bind(this, true));
+        window.addEventListener('offline', setOnline.bind(this, false));
         return (() => {
-            window.removeEventListener('online');
-            window.removeEventListener('offline');
+            window.removeEventListener('online', setOnline.bind(this, true));
+            window.removeEventListener('offline', setOnline.bind(this, false));
         });
     }, []);
 
@@ -31,10 +38,10 @@ const Index = () => {
     );
 
     return (
-        <>
+        <Provider store={store}>
             {!isOnline && offlineAlert()}
             <App/>
-        </>
+        </Provider>
     );
 };
 

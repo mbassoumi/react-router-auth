@@ -1,32 +1,30 @@
-import React, {useState}                       from 'react';
-import {Link, Redirect}                        from 'react-router-dom';
-import {useAuth}                               from '../../../context/auth';
-import logoImg                                 from '../../../img/logo.png';
-import LoginForm                               from './components/LoginForm';
-import PropTypes                               from 'prop-types';
-import {loginApi}                              from './apis/loginApi';
-import {googleLoginApi, googleLoginFailureApi} from './apis/googleLoginApi';
+import React, {useState}                           from 'react';
+import {Link, Redirect}                            from 'react-router-dom';
+import logoImg                                     from '../../../img/logo.png';
+import LoginForm                                   from './components/LoginForm';
+import PropTypes                                   from 'prop-types';
+import {loginApi}                                  from './apis/loginApi';
+import {googleLoginApi, googleLoginFailureApi}     from './apis/googleLoginApi';
 import {facebookLoginApi, facebookLoginFailureApi} from './apis/facebookLoginApi';
+import {useDispatch}                               from 'react-redux';
+import * as authActions                            from './../../../auth/authActions';
 
 
 const Login = ({location}) => {
 
-    const {setAuthTokens, setAuthUser} = useAuth();
 
+    const dispatch = useDispatch();
     const referer = (location.state && location.state.referer) || '/';
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const setAuthContext = (token, user) => {
-        setAuthUser(user);
-        setAuthTokens(token);
-        setIsLoggedIn(true);
-    };
-
     const login = (values, {setSubmitting}) => {
+
+
         const {status, result} = loginApi(values.username, values.password);
         if (status === 200) {
-            setAuthContext(result.token, result.user);
+            dispatch({type: authActions.LOGIN});
+            setIsLoggedIn(true);
         } else {
             alert('error in login api');
         }
@@ -37,7 +35,8 @@ const Login = ({location}) => {
     const facebookLogin = (response) => {
         const {status, result} = facebookLoginApi(response);
         if (status === 200) {
-            setAuthContext(result.token, result.user);
+            dispatch({type: authActions.LOGIN});
+            setIsLoggedIn(true);
         } else {
             alert('error in facebookLogin api');
             // eslint-disable-next-line no-console
@@ -54,10 +53,10 @@ const Login = ({location}) => {
     const googleLogin = (response) => {
         const {status, result} = googleLoginApi(response);
         if (status === 200) {
-            setAuthContext(result.token, result.user);
+            dispatch({type: authActions.LOGIN});
+            setIsLoggedIn(true);
         } else {
             alert('error in googleLogin api');
-
             // eslint-disable-next-line no-console
             console.log('error in googleLogin api', response);
         }

@@ -2,22 +2,21 @@ import React, {useState} from 'react';
 import logoImg           from '../../../img/logo.png';
 import SignupForm        from './components/SignupForm';
 import {signupApi}       from './apis/signup';
-import {useAuth}         from '../../../context/auth';
 import {Link, Redirect}  from 'react-router-dom';
-
+import {useDispatch}     from 'react-redux';
+import * as authActions  from './../../../auth/authActions';
 
 const Signup = () => {
 
-    const {setAuthTokens, setAuthUser} = useAuth();
+    const dispatch = useDispatch();
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const siignup = (values, {setSubmitting}) => {
         const {status, result} = signupApi(values);
         if (status === 200) {
+            dispatch({type: authActions.LOGIN});
             setSubmitting(false);
-            setAuthUser(result.user);
-            setAuthTokens(result.token);
             setIsLoggedIn(true);
         } else {
             alert('error in Signup api');
