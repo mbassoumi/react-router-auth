@@ -11387,6 +11387,11 @@ video {
   z-index: auto;
 }
 
+.disable-div {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;

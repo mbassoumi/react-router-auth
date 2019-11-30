@@ -6,28 +6,29 @@ import PropTypes                                   from 'prop-types';
 import {loginApi}                                  from './apis/loginApi';
 import {googleLoginApi, googleLoginFailureApi}     from './apis/googleLoginApi';
 import {facebookLoginApi, facebookLoginFailureApi} from './apis/facebookLoginApi';
-import {useDispatch}                               from 'react-redux';
-import * as authActions                            from './../../../auth/authActions';
+import {useSelector, useDispatch}                  from 'react-redux';
+import {LOGIN}                                     from '../../../auth/constants/action-types';
+import {loginAction}                               from './actions';
 
 
-const Login = ({location}) => {
+const Login = () => {
 
 
     const dispatch = useDispatch();
-    const referer = (location.state && location.state.referer) || '/';
+    const withServerError = useSelector(state => state.auth.withServerError);
+    const serverErrors = useSelector(state => state.auth.serverErrors);
+    const isServerLoading = useSelector(state => state.auth.loading);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const login = (values, {setSubmitting}) => {
 
 
-        const {status, result} = loginApi(values.username, values.password);
-        if (status === 200) {
-            dispatch({type: authActions.LOGIN});
-            setIsLoggedIn(true);
-        } else {
-            alert('error in login api');
-        }
+        // const {status, result} = loginApi(values.username, values.password);
+        // if (status === 200) {
+        dispatch(loginAction(values.username, values.password));
+        // } else {
+        //     alert('error in login api');
+        // }
         setSubmitting(false);
     };
 
@@ -35,8 +36,7 @@ const Login = ({location}) => {
     const facebookLogin = (response) => {
         const {status, result} = facebookLoginApi(response);
         if (status === 200) {
-            dispatch({type: authActions.LOGIN});
-            setIsLoggedIn(true);
+            dispatch({type: LOGIN});
         } else {
             alert('error in facebookLogin api');
             // eslint-disable-next-line no-console
@@ -53,8 +53,7 @@ const Login = ({location}) => {
     const googleLogin = (response) => {
         const {status, result} = googleLoginApi(response);
         if (status === 200) {
-            dispatch({type: authActions.LOGIN});
-            setIsLoggedIn(true);
+            dispatch({type: LOGIN});
         } else {
             alert('error in googleLogin api');
             // eslint-disable-next-line no-console
@@ -68,37 +67,26 @@ const Login = ({location}) => {
         console.log('error in googleLoginFailure api', response);
     };
 
-
-    if (isLoggedIn) {
-        return <Redirect to={referer}/>;
-    }
-
-
     return (
-        <div className="py-12 px-4 sm:w-full md:w-1/2 xl:w-1/3 mx-auto ">
-            <Link to="/">
-                <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
-            </Link>
-            <div className='shadow-xl'>
-                <LoginForm
-                    onSubmit={login}
-                    initialValues={{}}
-                    facebookLogin={facebookLogin}
-                    facebookLoginFailure={facebookLoginFailure}
-                    googleLogin={googleLogin}
-                    googleLoginFailure={googleLoginFailure}
-                />
+        <div className={isServerLoading ? 'disable-div' : ''}>
+            <div className="py-12 px-4 sm:w-full md:w-1/2 xl:w-1/3 mx-auto ">
+                <Link to="/">
+                    <img src={logoImg} alt="Logo" className='mx-auto h-32'/>
+                </Link>
+                <div className='shadow-xl'>
+                    <LoginForm
+                        onSubmit={login}
+                        initialValues={{}}
+                        facebookLogin={facebookLogin}
+                        facebookLoginFailure={facebookLoginFailure}
+                        googleLogin={googleLogin}
+                        googleLoginFailure={googleLoginFailure}
+                        serverErrors={withServerError ? serverErrors : undefined}
+                    />
+                </div>
             </div>
         </div>
     );
-};
-
-Login.propTypes = {
-    location: PropTypes.shape({
-        state: PropTypes.shape({
-            referer: PropTypes.object
-        })
-    }),
 };
 
 export default Login;

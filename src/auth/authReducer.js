@@ -1,4 +1,4 @@
-import * as actions from './authActions';
+import {LOGIN, LOGIN_API_ERROR, LOGIN_DATA_LOADED, LOGOUT} from './constants/action-types';
 
 const dummyState = {
     token: 'dummy token',
@@ -16,13 +16,48 @@ const dummyState = {
     }
 };
 
-const initialState = {};
+const initialState = {
+    token          : undefined,
+    user           : undefined,
+    withServerError: false,
+    serverErrors   : undefined,
+    loading        : false,
+};
 
 export const authReducer = (state = initialState, action) => {
+    const payload = action.payload;
     switch (action.type) {
-        case actions.LOGIN:
-            return dummyState;
-        case actions.LOGOUT:
+        case LOGIN:
+            console.log('LOGIN dispatch');
+            return {
+                ...state,
+                loading: true
+            };
+        case LOGIN_DATA_LOADED:
+            if (payload.status === 400) {
+                console.log('LOGIN_DATA_LOADED error dispatch', action);
+                return {
+                    ...state,
+                    withServerError: true,
+                    serverErrors   : [payload.data.error],
+                    loading: false
+                };
+            } else if (payload.status === 200) {
+                console.log('LOGIN_DATA_LOADED dispatch', action);
+                return {
+                    ...state,
+                    user           : dummyState.user,
+                    token          : payload.data.token,
+                    withServerError: false,
+                    serverErrors   : undefined,
+                    loading: false
+                };
+            }
+            return state;
+        case LOGIN_API_ERROR:
+            console.log('LOGIN_API_ERROR dispatch', action);
+            return state;
+        case LOGOUT:
             return {};
         default:
             return state;

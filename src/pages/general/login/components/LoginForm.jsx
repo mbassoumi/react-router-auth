@@ -1,11 +1,12 @@
-import React                     from 'react';
-import * as Yup                  from 'yup';
-import {Formik, Form}            from 'formik';
-import {TextField, StyledButton} from '../../../../components/forms/FormikComponents';
-import {Link}                    from 'react-router-dom';
-import PropTypes                 from 'prop-types';
-import MyFacebookLoginButton     from './MyFacebookLoginButton';
-import MyGoogleLoginButton       from './MyGoogleLoginButton';
+import React, {useState, useEffect} from 'react';
+import * as Yup                     from 'yup';
+import {Formik, Form}               from 'formik';
+import {TextField, StyledButton}    from '../../../../components/forms/FormikComponents';
+import {Link}                       from 'react-router-dom';
+import PropTypes                    from 'prop-types';
+import MyFacebookLoginButton        from './MyFacebookLoginButton';
+import MyGoogleLoginButton          from './MyGoogleLoginButton';
+import ServerErrors                 from './ServerErrors';
 
 
 const validate = Yup.object({
@@ -18,13 +19,20 @@ const validate = Yup.object({
 });
 
 
-const LoginForm = ({initialValues, onSubmit, facebookLogin, googleLogin, facebookLoginFailure, googleLoginFailure}) => {
+const LoginForm = ({initialValues, serverErrors, onSubmit, facebookLogin, googleLogin, facebookLoginFailure, googleLoginFailure}) => {
     const loginInitialValues = {
         username: '',
         password: ''
     };
     const combinedInitialValues = Object.assign(loginInitialValues, initialValues);
 
+    const [showServerErrors, setShowServerErrors] = useState(false);
+    useEffect(() => {
+        setShowServerErrors(serverErrors !== undefined);
+    }, [serverErrors]);
+
+    console.log('serverErrors', serverErrors);
+    console.log('showServerErrors', showServerErrors);
     return (
         <Formik
             initialValues={combinedInitialValues}
@@ -56,7 +64,8 @@ const LoginForm = ({initialValues, onSubmit, facebookLogin, googleLogin, faceboo
                             Login
                         </StyledButton>
                     </div>
-
+                    {showServerErrors &&
+                    <ServerErrors errors={serverErrors} onClose={() => setShowServerErrors(false)}/>}
                 </Form>
 
                 <div className="flex-col border-t-2 pt-4 px mx-auto">
@@ -87,7 +96,8 @@ LoginForm.propTypes = {
     googleLogin         : PropTypes.func.isRequired,
     googleLoginFailure  : PropTypes.func.isRequired,
     initialValues       : PropTypes.object.isRequired,
-    onSubmit            : PropTypes.func.isRequired
+    onSubmit            : PropTypes.func.isRequired,
+    serverErrors        : PropTypes.array.isRequired
 };
 
 export default LoginForm;

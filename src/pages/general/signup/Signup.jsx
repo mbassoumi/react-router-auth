@@ -4,7 +4,7 @@ import SignupForm        from './components/SignupForm';
 import {signupApi}       from './apis/signup';
 import {Link, Redirect}  from 'react-router-dom';
 import {useDispatch}     from 'react-redux';
-import * as authActions  from './../../../auth/authActions';
+import {LOGIN}           from '../../../auth/constants/action-types';
 
 const Signup = () => {
 
@@ -15,7 +15,7 @@ const Signup = () => {
     const siignup = (values, {setSubmitting}) => {
         const {status, result} = signupApi(values);
         if (status === 200) {
-            dispatch({type: authActions.LOGIN});
+            dispatch({type: LOGIN});
             setSubmitting(false);
             setIsLoggedIn(true);
         } else {
