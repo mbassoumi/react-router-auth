@@ -31,8 +31,6 @@ const LoginForm = ({initialValues, serverErrors, onSubmit, facebookLogin, google
         setShowServerErrors(serverErrors !== undefined);
     }, [serverErrors]);
 
-    console.log('serverErrors', serverErrors);
-    console.log('showServerErrors', showServerErrors);
     return (
         <Formik
             initialValues={combinedInitialValues}
@@ -97,7 +95,7 @@ LoginForm.propTypes = {
     googleLoginFailure  : PropTypes.func.isRequired,
     initialValues       : PropTypes.object.isRequired,
     onSubmit            : PropTypes.func.isRequired,
-    serverErrors        : PropTypes.array.isRequired
+    serverErrors        : PropTypes.array
 };
 
 export default LoginForm;

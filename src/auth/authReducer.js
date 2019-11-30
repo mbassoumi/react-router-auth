@@ -17,8 +17,8 @@ const dummyState = {
 };
 
 const initialState = {
-    token          : undefined,
-    user           : undefined,
+    token          : localStorage.getItem('token'),
+    user           : JSON.parse(localStorage.getItem('user')),
     withServerError: false,
     serverErrors   : undefined,
     loading        : false,

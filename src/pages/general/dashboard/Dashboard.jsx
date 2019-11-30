@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import MajdPicture                  from '../../../img/Majd2.jpg';
-import {useSelector}                from 'react-redux';
+import {useDispatch, useSelector}   from 'react-redux';
+import {logoutAction}               from '../../../auth/actions/authActions';
 
 const Dashboard = () => {
 
     const auth = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
     const [userPicture, setUserPicture] = useState(MajdPicture);
 
@@ -17,8 +19,7 @@ const Dashboard = () => {
     }, [auth.user.id, auth.user.loggedFrom, auth.user.picture]);
 
     const logOut = () => {
-        // setAuthTokens();
-        // setAuthUser();
+        dispatch(logoutAction());
     };
 
     return (
